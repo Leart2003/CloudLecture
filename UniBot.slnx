@@ -1,3 +1,6 @@
 <Solution>
-  <Project Path="UniBot/UniBot.csproj" />
+  <Project Path="Application/Application.csproj" Id="febc8799-9329-4fb9-8d58-979382bb84bd" />
+  <Project Path="Domain/Domain.csproj" Id="8bfcd94f-5757-4516-b10a-971089b7e1b9" />
+  <Project Path="Infrastructure/Infrastructure.csproj" Id="e1de10b8-6f9f-4647-847b-5f433d9f421e" />
+  <Project Path="UniBot/CloudLecture.csproj" />
 </Solution>
