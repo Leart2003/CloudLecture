@@ -59,5 +59,22 @@ namespace CloudLecture.Controllers
 
             return PhysicalFile(version.Url, "video/mp4", enableRangeProcessing: true);
         }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var video = await _videoService.GetVideoById(id);
+
+            if (video is null)
+                return NotFound();
+
+            return Ok(new
+            {
+                video.Id,
+                video.Title,
+                video.Description,
+                video.Status,
+                Qualities = video.Versions.Select(v => v.Quality)
+            });
+        }
     }
 }
