@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Application.Interfaces;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 namespace CloudLecture.Controllers
+
 {
     [Route("api/[controller]")]
     [ApiController]

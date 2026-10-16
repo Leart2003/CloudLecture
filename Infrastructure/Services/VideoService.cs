@@ -16,9 +16,9 @@ public class VideoService : IVideoService
         _context = context;
     }
 
-   
 
-    public async Task<Video> UploadVideo(Stream stream, string fileName, string contentType, string title, string description)
+
+    public async Task<Video> UploadVideo(Stream stream, string fileName, string contentType, string title, string description, int userId)
     {
         var folder = Path.Combine(Directory.GetCurrentDirectory(), "uploads");
         Directory.CreateDirectory(folder);
@@ -37,7 +37,7 @@ public class VideoService : IVideoService
             Description = description,
             OriginalUrl = path,
             Status = "Processing",
-            UploadedByUserId = 0
+            UploadedByUserId = userId
         };
 
         _context.Videos.Add(video);

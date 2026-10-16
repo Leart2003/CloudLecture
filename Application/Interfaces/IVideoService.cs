@@ -7,7 +7,7 @@ namespace Application.Interfaces
 {
     public interface IVideoService
     {
-        Task<Video> UploadVideo(Stream stream, string fileName, string contentType, string title, string description);
+        Task<Video> UploadVideo(Stream stream, string fileName, string contentType, string title, string description, int userId);
 
         Task<Video?> ConvertVideo(int videoId);
 
