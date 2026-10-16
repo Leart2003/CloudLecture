@@ -10,5 +10,8 @@ namespace Application.Interfaces
         Task<Video> UploadVideo(Stream stream, string fileName, string contentType, string title, string description);
 
         Task<Video?> ConvertVideo(int videoId);
+
+        Task<List<Video>> GetAllVideos();
+        Task<Video?> GetVideoById(int id);
     }
 }

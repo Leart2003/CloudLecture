@@ -99,4 +99,20 @@ public class VideoService : IVideoService
         await _context.SaveChangesAsync();
         return video;
     }
+
+    public async Task<List<Video>> GetAllVideos()
+    {
+      return await  _context.Videos
+            .Include(v => v.Versions)
+            .Where(v => v.Status == "Ready")
+            .OrderByDescending(v => v.CreatedAt)
+            .ToListAsync();
+    }
+
+    public Task<Video?> GetVideoById(int id)
+    {
+        return _context.Videos
+            .Include(v => v.Versions)
+            .FirstOrDefaultAsync(v => v.Id == id);
+    }
 }
