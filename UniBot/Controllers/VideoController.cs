@@ -29,5 +29,35 @@ namespace CloudLecture.Controllers
                 Versions = video.Versions.Select(v => new { v.Quality, v.Url })
             });
         }
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var videos = await _videoService.GetAllVideos();
+
+            return Ok(videos.Select(v => new
+            {
+                v.Id,
+                v.Title,
+                v.Description,
+                v.CreatedAt,
+                Qualities = v.Versions.Select(x => x.Quality)
+            }));
+        }
+
+        [HttpGet("{id}/stream/{quality}")]
+        public async Task<IActionResult> Stream(int id, string quality)
+        {
+            var video = await _videoService.GetVideoById(id);
+
+            if (video is null)
+                return NotFound();
+
+            var version = video.Versions.FirstOrDefault(v => v.Quality == quality);
+
+            if (version is null || !System.IO.File.Exists(version.Url))
+                return NotFound("This quality is not available");
+
+            return PhysicalFile(version.Url, "video/mp4", enableRangeProcessing: true);
+        }
     }
 }
