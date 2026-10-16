@@ -1,4 +1,5 @@
-using Infrastructure;
+using Microsoft.EntityFrameworkCore;
+using Infrastructure.DbContext;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,7 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
-builder.Services.AddInfrastructure(builder.Configuration);
+
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
 
@@ -18,6 +21,14 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("React", policy =>
+        policy.WithOrigins("http://localhost:5173")
+              .AllowAnyHeader()
+              .AllowAnyMethod());
+});
+app.UseCors("React");
 app.UseAuthorization();
 
 app.MapControllers();
