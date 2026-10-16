@@ -1,5 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.DbContext;
+using System.Text;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.IdentityModel.Tokens;
+using Infrastructure.Services;
+using Application.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,7 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
-
+builder.Services.AddScoped<IVideoService, VideoService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
