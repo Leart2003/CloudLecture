@@ -14,7 +14,7 @@ namespace Infrastructure.DbContext
         {
         }
 
-       
+       public DbSet<User> Users => Set<User>();
         public DbSet<Video> Videos => Set<Video>();
         public DbSet<VideoVersion> VideoVersions => Set<VideoVersion>();
 
