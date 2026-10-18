@@ -3,6 +3,7 @@ using Application.Interfaces;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -53,6 +54,16 @@ namespace CloudLecture.Controllers
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return Ok();
+        }
+        [Authorize]
+        [HttpGet("me")]
+        public IActionResult Me()
+        {
+            return Ok(new
+            {
+                Email = User.FindFirstValue(ClaimTypes.Email),
+                Role = User.FindFirstValue(ClaimTypes.Role)
+            });
         }
     }
 }
