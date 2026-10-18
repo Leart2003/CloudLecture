@@ -18,5 +18,6 @@ namespace Infrastructure.DbContext
         public DbSet<Video> Videos => Set<Video>();
         public DbSet<VideoVersion> VideoVersions => Set<VideoVersion>();
 
+
     }
 }
