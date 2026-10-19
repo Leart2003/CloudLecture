@@ -16,18 +16,41 @@ namespace Infrastructure.Services
         private readonly ApplicationDbContext _dbContext;
         private readonly PasswordHasher<User> _hasher = new();
 
+     
+
         public AuthService(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
+          
         }
         public Task<User?> Login(LoginDto dto)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> Register(RegisterDto dto)
+        public async Task<bool> Register(RegisterDto dto)
         {
-            throw new NotImplementedException();
+
+            if (dto.Role != "Professor" && dto.Role != "Student")
+                return false;
+
+            if (await _dbContext.Users.AnyAsync(u => u.Email == dto.email))
+                return false;
+
+            var user = new User
+            {
+                Email = dto.email,
+                Role = dto.Role
+            };
+
+            user.PasswordHash = _hasher.HashPassword(user, dto.Password);
+
+            _dbContext.Users.Add(user);
+            await _dbContext.SaveChangesAsync();
+
+            return true;
+
+
         }
     }
 }
