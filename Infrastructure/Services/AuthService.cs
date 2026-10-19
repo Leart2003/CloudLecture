@@ -23,9 +23,17 @@ namespace Infrastructure.Services
             _dbContext = dbContext;
           
         }
-        public Task<User?> Login(LoginDto dto)
+        public async Task<User?> Login(LoginDto dto)
         {
-            throw new NotImplementedException();
+            var user = _dbContext.Users.FirstOrDefault(u => u.Email == dto.email);
+
+            if (user == null)
+               { return null; }
+            var result = _hasher.VerifyHashedPassword(user, user.PasswordHash, dto.Password);
+            if (result == PasswordVerificationResult.Failed)
+                return null;
+
+            return user;
         }
 
         public async Task<bool> Register(RegisterDto dto)
