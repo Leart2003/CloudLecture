@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getMe, logout } from "./api/auth";
 import LoginForm from "./components/LoginForm";
-import UploadForm from "./components/UploadForm";
+import UploadForm from "./components/uploadForm";
 import VideoList from "./components/VideoList";
 
 function App() {

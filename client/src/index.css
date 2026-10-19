@@ -190,3 +190,56 @@ body {
   margin: 0 auto;
   padding: 24px;
 }
+.card {
+  background: var(--card);
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  margin-bottom: 24px;
+}
+
+.card h2 {
+  margin-top: 0;
+}
+
+.video-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.video-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.video-list li:hover,
+.video-list li.active {
+  background: #eff6ff;
+}
+
+.video-list span {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.player {
+  margin-bottom: 24px;
+}
+
+.player video {
+  display: block;
+  width: 100%;
+  margin-top: 12px;
+  border-radius: 8px;
+  background: #000;
+}
+
+.player select {
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
