@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { getMe, logout } from "./api/auth";
 import LoginForm from "./components/LoginForm";
-
+import UploadForm from "./components/UploadForm";
+import VideoList from "./components/VideoList";
 
 function App() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
     getMe().then((u) => {
@@ -36,9 +38,12 @@ function App() {
         </div>
       </header>
 
-      <main className="container">
-        <p>Videos will appear here.</p>
-      </main>
+   <main className="container">
+  {user.role === "Professor" && (
+    <UploadForm onUploaded={() => setRefreshKey((k) => k + 1)} />
+  )}
+  <VideoList refreshKey={refreshKey} />
+</main>
     </>
   );
 }
