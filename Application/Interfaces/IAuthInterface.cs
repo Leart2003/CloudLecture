@@ -10,5 +10,7 @@ namespace Application.Interfaces
     {
         Task<bool> Register(RegisterDto dto);
         Task<User?> Login(LoginDto dto);
+
+        
     }
 }

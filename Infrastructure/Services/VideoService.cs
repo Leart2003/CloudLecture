@@ -115,4 +115,26 @@ public class VideoService : IVideoService
             .Include(v => v.Versions)
             .FirstOrDefaultAsync(v => v.Id == id);
     }
+
+    public async Task DeleteVideo(int id)
+    {
+        var video = await _context.Videos
+            .Include(v => v.Versions)
+            .FirstOrDefaultAsync(v => v.Id == id);
+
+        if (video is null)
+        {
+            return;
+        }
+        if (File.Exists(video.OriginalUrl))
+        {
+            File.Delete(video.OriginalUrl);
+        }
+
+        var processedFolder = Path.Combine(Directory.GetCurrentDirectory(), "processed", video.Result.Id.ToString());
+
+        _context.VideoVersions.RemoveRange(video.Versions);
+        _context.Videos.Remove(video);
+        await _context.SaveChangesAsync();
+    }
 }

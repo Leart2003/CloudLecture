@@ -13,5 +13,7 @@ namespace Application.Interfaces
 
         Task<List<Video>> GetAllVideos();
         Task<Video?> GetVideoById(int id);
+
+        Task<bool> DeleteVideo(int id);
     }
 }
