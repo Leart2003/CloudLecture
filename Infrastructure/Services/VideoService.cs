@@ -131,7 +131,7 @@ public class VideoService : IVideoService
             File.Delete(video.OriginalUrl);
         }
 
-        var processedFolder = Path.Combine(Directory.GetCurrentDirectory(), "processed", video.Result.Id.ToString());
+        var processedFolder = Path.Combine(Directory.GetCurrentDirectory(), "processed", video.Id.ToString());
 
         _context.VideoVersions.RemoveRange(video.Versions);
         _context.Videos.Remove(video);
