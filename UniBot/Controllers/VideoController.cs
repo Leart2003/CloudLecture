@@ -103,6 +103,22 @@ namespace CloudLecture.Controllers
             return PhysicalFile(version.Url, "video/mp4", enableRangeProcessing: true);
         }
 
+        [Authorize(Roles = "Professor")]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var video = await _videoService.GetVideoById(id);
 
+            if (video is null)
+                return NotFound();
+
+            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+
+            if (video.UploadedByUserId != userId)
+                return Forbid();
+
+            await _videoService.DeleteVideo(id);
+            return NoContent();
+        }
     }
 }

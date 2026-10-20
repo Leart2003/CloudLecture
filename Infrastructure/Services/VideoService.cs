@@ -116,7 +116,7 @@ public class VideoService : IVideoService
             .FirstOrDefaultAsync(v => v.Id == id);
     }
 
-    public async Task DeleteVideo(int id)
+    public async Task<bool> DeleteVideo(int id)
     {
         var video = await _context.Videos
             .Include(v => v.Versions)
@@ -136,5 +136,7 @@ public class VideoService : IVideoService
         _context.VideoVersions.RemoveRange(video.Versions);
         _context.Videos.Remove(video);
         await _context.SaveChangesAsync();
+
+        return true;
     }
 }
