@@ -59,13 +59,19 @@ namespace CloudLecture.Controllers
         {
             var videos = await _videoService.GetAllVideos();
 
+            int? currentUserId = null;
+            var idClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (idClaim != null && User.IsInRole("Professor"))
+                currentUserId = int.Parse(idClaim);
+
             return Ok(videos.Select(v => new
             {
                 v.Id,
                 v.Title,
                 v.Description,
                 v.CreatedAt,
-                Qualities = v.Versions.Select(x => x.Quality)
+                Qualities = v.Versions.Select(x => x.Quality),
+                CanDelete = v.UploadedByUserId == currentUserId
             }));
         }
 
