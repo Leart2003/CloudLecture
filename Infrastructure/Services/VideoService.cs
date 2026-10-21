@@ -124,7 +124,7 @@ public class VideoService : IVideoService
 
         if (video is null)
         {
-            return;
+            return false;
         }
         if (File.Exists(video.OriginalUrl))
         {
